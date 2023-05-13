@@ -6,14 +6,18 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'
 
-const endpoint = 'http://127.0.0.1:5000/graphql'
+const endpoint = `http://${process.env.API_GATEWAY_URL}:${process.env.API_GATEWAY_PORT}/graphql`
 
 export default function Confirmation() {
   const [errorForm, setErrorForm] = useState('');
+  const [loadingForm, setLoadingForm] = useState(false);
   const router = useRouter();
   const { register, formState: { errors }, handleSubmit } = useForm();
-
+const changeLoading = ()=>{
+    setLoadingForm(true)
+  }
   const onSubmit = data1 => {
+    changeLoading()
     const confirmEmail = `
     mutation {
       confirmEmail(token: "${data1.token}")
@@ -25,6 +29,7 @@ export default function Confirmation() {
         if (response.data.hasOwnProperty('errors')) {
           console.log("TOKEN NO VALIDO !!!")
           setErrorForm("true")
+          setLoadingForm(false)
         }
         else {
           console.log("Token valido")
@@ -36,6 +41,7 @@ export default function Confirmation() {
       .catch(error => {
         console.log(error);
       });
+      changeLoading()
 
   }
   return (
@@ -85,13 +91,22 @@ export default function Confirmation() {
                 />
                 {errors.token?.type === 'required' && <p role="alert">Ingresa el token.</p>}
               </div>
-              {errorForm == "true" ? <p>El Token ha expirado o es inválido.</p> : <p></p>}
-              <div className="mb-3">
-                <div className='d-flex justify-content-center'>
-
-                  <button type="submit" className="btn btn-dark mb-3"  >Aceptar</button>
-                </div>
-              </div>
+              {errorForm == "true" ? <p className="text-danger">El Token ha expirado o es inválido.</p> : <p></p>}
+              {loadingForm == true ?<div className="mb-3">
+                                          <div className='d-flex justify-content-center'>
+                                            <button className="btn btn-dark" type="button" disabled>
+                                              <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true">
+                                              </span>Cargando...
+                                            </button>
+                                          </div>
+                                        </div>
+                                      :<div className="mb-3">
+                                        <div className='d-flex justify-content-center'>
+                                          <button type="submit" className="btn btn-dark mb-3">Aceptar
+                                          </button>
+                                        </div>
+                                      </div>}
+              
             </div>
 
             <div className="card-footer d-flex justify-content-center align-content-center">

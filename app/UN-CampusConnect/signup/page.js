@@ -7,15 +7,19 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation'
 
 
-const endpoint = 'http://127.0.0.1:5000/graphql'
+const endpoint = `http://${process.env.API_GATEWAY_URL}:${process.env.API_GATEWAY_PORT}/graphql`
 
 
 export default function Signup() {
   const [errorForm, setErrorForm] = useState('');
+  const [loadingForm, setLoadingForm] = useState(false);
   const router = useRouter();
   const { register, formState: { errors }, handleSubmit } = useForm();
-
+  const changeLoading = ()=>{
+    setLoadingForm(true)
+  }
   const onSubmit = data1 => {
+    changeLoading()
     const createUser = `
       mutation {
         signup(user: {
@@ -33,6 +37,7 @@ export default function Signup() {
         if (response.data.hasOwnProperty('errors')){
           console.log("CORREO O USUARIO YA EXISTEN !!!")
           setErrorForm("true")
+          setLoadingForm(false)
         }
         else{
           console.log("REGISTRO VALIDO, FALTA CONFIRMAR")
@@ -45,7 +50,7 @@ export default function Signup() {
       .catch(error => {
         console.log(error);
       });
-
+      changeLoading()
   };
 
   
@@ -93,7 +98,7 @@ export default function Signup() {
                 {...register("username",{ required: true })}
                 aria-invalid={errors.username ? "true" : "false"}
               />
-              {errors.password?.type ==='required' && <p class="text-danger" role="alert">Ingrese un nombre de usuario.</p>}
+              {errors.password?.type ==='required' && <p className="text-danger" role="alert">Ingrese un nombre de usuario.</p>}
               
             </div>
             <div className="mb-3">
@@ -104,8 +109,8 @@ export default function Signup() {
                 id="exampleFormControlInput1"
                   {...register("email", { required: true, pattern: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/ })}
                   aria-invalid={errors.email ? "true" : "false"} />
-                {errors.email?.type === 'pattern' && <p class="text-danger" role="alert">Ingrese una dirección de correo válido</p>}
-                {errors.email?.type === 'required' && <p class="text-danger" role="alert">Ingrese una dirección de correo.</p>}
+                {errors.email?.type === 'pattern' && <p className="text-danger" role="alert">Ingrese una dirección de correo válido</p>}
+                {errors.email?.type === 'required' && <p className="text-danger" role="alert">Ingrese una dirección de correo.</p>}
               </div>
               <div className="mb-3 ">
                 <label htmlFor="inputPassword" className="form-label">Contraseña</label>
@@ -130,13 +135,21 @@ export default function Signup() {
                 
               </select>
             </div>
-            {errorForm =="true" ? <p class="text-danger" >Nombre de usuario o Correo electrónico ya existen</p>:<p></p>}
-            <div className="mb-3">
-              <div className='d-flex justify-content-center'>
-
-                <button type="submit" className="btn btn-dark mb-3"  >Aceptar</button>
-              </div>
-            </div>
+            {errorForm =="true" ? <p className="text-danger" >Nombre de usuario o Correo electrónico ya existen</p>:<p></p>}
+            {loadingForm == true ?<div className="mb-3">
+                                          <div className='d-flex justify-content-center'>
+                                            <button className="btn btn-dark" type="button" disabled>
+                                              <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true">
+                                              </span>Cargando...
+                                            </button>
+                                          </div>
+                                        </div>
+                                      :<div className="mb-3">
+                                        <div className='d-flex justify-content-center'>
+                                          <button type="submit" className="btn btn-dark mb-3">Aceptar
+                                          </button>
+                                        </div>
+                                      </div>}
           </div>
 
           <div className="card-footer d-flex justify-content-center align-content-center">
