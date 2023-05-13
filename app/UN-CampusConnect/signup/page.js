@@ -90,11 +90,10 @@ export default function Signup() {
                 className="form-control" 
                 name="username"
                 id="username" 
-                placeholder="Nombre de usuario"
                 {...register("username",{ required: true })}
                 aria-invalid={errors.username ? "true" : "false"}
               />
-              {errors.password?.type ==='required' && <p role="alert">Ingrese un nombre de usuario </p>}
+              {errors.password?.type ==='required' && <p class="text-danger" role="alert">Ingrese un nombre de usuario.</p>}
               
             </div>
             <div className="mb-3">
@@ -102,12 +101,11 @@ export default function Signup() {
               <input 
                 type="email" 
                 className="form-control" 
-                id="exampleFormControlInput1" 
-                  placeholder="nombre@ejemplo.com"
+                id="exampleFormControlInput1"
                   {...register("email", { required: true, pattern: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/ })}
                   aria-invalid={errors.email ? "true" : "false"} />
-                {errors.email?.type === 'pattern' && <p role="alert">Ingrese una dirección de correo válido</p>}
-                {errors.email?.type === 'required' && <p role="alert">Ingrese una dirección de correo </p>}
+                {errors.email?.type === 'pattern' && <p class="text-danger" role="alert">Ingrese una dirección de correo válido</p>}
+                {errors.email?.type === 'required' && <p class="text-danger" role="alert">Ingrese una dirección de correo.</p>}
               </div>
               <div className="mb-3 ">
                 <label htmlFor="inputPassword" className="form-label">Contraseña</label>
@@ -117,7 +115,7 @@ export default function Signup() {
                   id="inputPassword" 
                   {...register("password",{ required: true })} 
                   aria-invalid={errors.password ? "true" : "false"} />
-                  {errors.password?.type ==='required' && <p role="alert">Ingrese una contraseña </p>}
+                  {errors.password?.type ==='required' && <p class="text-danger" role="alert">Ingrese una contraseña.</p>}
 
               </div>
             <div className="mb-3">
@@ -132,7 +130,7 @@ export default function Signup() {
                 
               </select>
             </div>
-            {errorForm =="true" ? <p>Nombre de usuario o Correo electrónico ya existen</p>:<p></p>}
+            {errorForm =="true" ? <p class="text-danger" >Nombre de usuario o Correo electrónico ya existen</p>:<p></p>}
             <div className="mb-3">
               <div className='d-flex justify-content-center'>
 

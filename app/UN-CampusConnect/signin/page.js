@@ -8,7 +8,15 @@ import { useRouter } from 'next/navigation'
 const endpoint = 'http://127.0.0.1:5000/graphql'
 export default function Signin() {
   const [errorForm, setErrorForm] = useState('');
+  const router = useRouter();
   const { register, formState: { errors }, handleSubmit } = useForm();
+  const queryRole = `
+    query{
+      getMyInfo {
+        role
+      },
+    }
+  `
   const onSubmit = data1 =>{
     const queryUser = `
     query{
@@ -21,7 +29,7 @@ export default function Signin() {
     axios.post(endpoint, { query: queryUser })
       .then(response => {
         if (response.data.hasOwnProperty('errors')){
-          console.log("USUARIO NO ENCONTRADO O CONTRA INVALIDA !!!")
+          console.log("USUARIO NO ENCONTRADO O CONTRASEÑA INVALIDA !!!")
           setErrorForm("true")
         }
         else{
@@ -29,10 +37,25 @@ export default function Signin() {
           setErrorForm("false")
           const token = response.data.data.signin
           localStorage.setItem('token', token);
+          const config ={
+            headers: { Authorization: `Bearer ${token}` }
+          }
+          axios.post(endpoint,{query: queryRole},config)
+            .then(response =>{
+              const role = response.data.data.getMyInfo.role
+              if (role == "admin"){
+                router.push('/UN-CampusConnect/admin')
+              }
+              else if (role == "student"){
+                router.push('/UN-CampusConnect/student')
+              }
+            })
+            .catch(error=>{
+              console.log(error)
+            })
         }
       })
       .catch(error => {
-        console.log("error")
         console.log(error);
       });
   } 
@@ -73,12 +96,11 @@ export default function Signin() {
               <label htmlFor="email" className="form-label">Correo electrónico</label>
               <input 
                 className="form-control" 
-                id="exampleFormControlInput1" 
-                placeholder="nombre@ejemplo.com"
+                id="exampleFormControlInput1"
                 {...register("email",{required: true, pattern: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/})}
                 aria-invalid={errors.email ? "true" : "false"} />
-                {errors.email?.type ==='pattern' && <p role="alert">Ingrese una dirección de correo válido</p>}
-                {errors.email?.type ==='required' && <p role="alert">Ingrese una dirección de correo </p>}
+                {errors.email?.type ==='pattern' && <p class="text-danger" role="alert">Ingrese una dirección de correo válido</p>}
+                {errors.email?.type ==='required' && <p class="text-danger" role="alert">Ingrese una dirección de correo.</p>}
             </div>
             <div className="mb-3 ">
               <label htmlFor="inputPassword" className="form-label">Contraseña</label>
@@ -88,13 +110,13 @@ export default function Signin() {
                 id="exampleFormControlInput2" 
                 {...register("password",{ required: true })} 
                 aria-invalid={errors.password ? "true" : "false"} />
-                {errors.password?.type ==='required' && <p role="alert">Ingrese una contraseña </p>}
+                {errors.password?.type ==='required' && <p class="text-danger" role="alert" >Ingrese una contraseña. </p> }
             </div>
             
             <div className="mb-3">
 
             </div>
-            {errorForm =="true" ? <p>Credenciales invalidas</p>:<p></p>}
+            {errorForm =="true" ? <p class="text-danger" >Credenciales invalidas</p>:<p></p>}
 
             <div className="mb-3">
               <div className='d-flex justify-content-center'>
