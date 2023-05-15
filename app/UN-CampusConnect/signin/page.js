@@ -5,6 +5,7 @@ import Image from 'next/image';
 import { useForm } from "react-hook-form";
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'
+import Cookies from 'js-cookie';
 const endpoint = `http://${process.env.API_GATEWAY_URL}:${process.env.API_GATEWAY_PORT}/graphql`
 export default function Signin() {
   const [errorForm, setErrorForm] = useState('');
@@ -48,7 +49,9 @@ export default function Signin() {
           console.log("login VALIDO")
           setErrorForm("false")
           const token = response.data.data.signin
+          Cookies.set('myToken', token);
           localStorage.setItem('token', token);
+
           const config ={
             headers: { Authorization: `Bearer ${token}` }
           }
@@ -61,6 +64,10 @@ export default function Signin() {
               else if (role == "student"){
                 router.push('/UN-CampusConnect/student')
               }
+              else if (role == "tutor"){
+                router.push('/UN-CampusConnect/tutor')
+              }
+              
             })
             .catch(error=>{
               console.log(error)
