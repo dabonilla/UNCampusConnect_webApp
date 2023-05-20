@@ -1,13 +1,12 @@
 'use client'
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.css'
-import FormEdit from 'app/components/FormEditCall'
+import FormEdit from 'app/components/formEditCall'
 
 
+const ModalEdit = ({id,hideModal,data,idCall,reloadPage}) => {
 
-
-
-const ModalEdit = ({id,hideModal,data,idCall}) => {
+    
 
   return (
 
@@ -19,12 +18,15 @@ const ModalEdit = ({id,hideModal,data,idCall}) => {
           <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div className="modal-body">
-        <FormEdit data ={data} idCall={idCall}/>
+          
+        <FormEdit reloadPage ={reloadPage}  data ={data} idCall={idCall} hideModal ={hideModal} />
         </div>
+        {/*
         <div className="modal-footer">
           <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
           <button type="button" className="btn btn-primary" onClick={hideModal}>Guardar</button>
-        </div>
+        </div>*/
+        }
       </div>
     </div>
   </div>

@@ -98,7 +98,7 @@ export default function Signup() {
                 {...register("username",{ required: true })}
                 aria-invalid={errors.username ? "true" : "false"}
               />
-              {errors.password?.type ==='required' && <p className="text-danger" role="alert">Ingrese un nombre de usuario.</p>}
+              {errors.username?.type ==='required' && <p className="text-danger" role="alert">Ingrese un nombre de usuario.</p>}
               
             </div>
             <div className="mb-3">
