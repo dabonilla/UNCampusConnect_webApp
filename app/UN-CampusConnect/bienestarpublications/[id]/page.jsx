@@ -67,3 +67,35 @@ export default function PublicacionesBienestarId({ params }) {
       
   }
   
+
+//   const cookieValue = Cookies.get('myToken');
+//   console.log(cookieValue);
+//   const config ={
+//     headers: { Authorization: `Bearer ${cookieValue}` }
+//   }
+  
+  
+  
+  
+//   const queryInfo = `
+//     query{
+//       getMyInfo {
+//         id
+//       },
+//     }
+//   `
+//   axios.post(endpoint, { query: queryInfo }, config)
+//   .then((response) => {
+//       if (response.data.hasOwnProperty('errors')) {
+//       console.log("USUARIO NO ENCONTRADO O CONTRASEÑA INVALIDA !!!");
+//       setErrorForm("true");
+//       setLoadingForm(false);
+//       } else {
+//       console.log("Datos recibidos:");
+//       console.log("Test1:", response.data.data.getMyInfo);
+//       }
+//   })
+//   .catch((error) => {
+//       console.log("Error:", error);
+// // Aquí puedes manejar el error de acuerdo a tus necesidades
+// });

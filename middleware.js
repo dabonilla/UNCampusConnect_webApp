@@ -46,13 +46,15 @@ export async function Middleware(request) {
     }
     else if(pathName.startsWith('/UN-CampusConnect/student') && role != 'tutor'){
       return NextResponse.redirect(new URL('/UN-CampusConnect/403', request.url))
+    }else if (pathName.startsWith('/UN-CampusConnect/bienestarpublications/create')) {
+      return NextResponse.next();
     }
   }
 }
 }
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/UN-CampusConnect/admin','/UN-CampusConnect/student','/UN-CampusConnect/tutor']
+  matcher: ['/UN-CampusConnect/admin','/UN-CampusConnect/student','/UN-CampusConnect/tutor', '/UN-CampusConnect/bienestarpublications/create']
 };
 
 export default Middleware;
