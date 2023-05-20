@@ -11,15 +11,15 @@ const endpoint = `http://${process.env.API_GATEWAY_URL}:${process.env.API_GATEWA
 
 export default function PublicacionesBienestarId({ params }) {
     const { id } = params;
-  
-    const [publicaciones, setPublicaciones] = useState([]);
-  
+    const [username, setUsername] = useState("");
+    const [publicaciones, setPublicaciones] = useState([]); 
     useEffect(() => {
       const queryBienestarPublicationsId = `
         query {
           getpublicationid(id:"${id}"){
             publication_id
             title
+            author_publication
             publication_date
             content_publication
             image
@@ -34,16 +34,48 @@ export default function PublicacionesBienestarId({ params }) {
             setErrorForm("true");
             setLoadingForm(false);
             } else {
-            console.log("Datos recibidos:");
-            console.log("Test1:", response.data.data.getpublicationid);
-
+            const autor_publicacion = response.data.data.getpublicationid.author_publication;
+            let data = response.data.data.getpublicationid;
             // Crear un array con un solo elemento que contenga el objeto
-            const publicationArray = [response.data.data.getpublicationid];
-            setPublicaciones(publicationArray);
+
+            const cookieValue = Cookies.get('myToken');
+            const config ={
+              headers: { Authorization: `Bearer ${cookieValue}` }
             }
+            
+            const querygetusername = `
+            query {
+              getUserInfo(
+                  id: "${autor_publicacion}"
+              ){
+                  username
+              }
+            }
+                `;
+            axios.post(endpoint, { query: querygetusername }, config)
+            .then((response) => {
+              if (response.data.hasOwnProperty('errors')) {
+                console.log("USUARIO NO ENCONTRADO O CONTRASEÑA INVALIDA !!!");
+                setErrorForm("true");
+                setLoadingForm(false);
+              } else {
+                console.log(response.data.data.getUserInfo.username);
+                setUsername(response.data.data.getUserInfo.username);
+                data.username = response.data.data.getUserInfo.username;
+              }
+            })
+            .catch((error) => {
+              console.log("Error:", error);
+            });
+                  
+            const publicationArray = [data];
+            console.log(data);
+            setPublicaciones(publicationArray);      
+            }           
         })
         .catch((error) => {
             console.log("Error:", error);
+
     // Aquí puedes manejar el error de acuerdo a tus necesidades
   });
 
@@ -58,6 +90,7 @@ export default function PublicacionesBienestarId({ params }) {
                 <h2>{publicacion.title}</h2>
                 <p>{publicacion.publication_date}</p>
                 <p>{publicacion.content_publication}</p>
+                <p>{username}</p>
                 <img src={publicacion.image} alt={publicacion.title} />
               </article>
             ))}
@@ -67,35 +100,3 @@ export default function PublicacionesBienestarId({ params }) {
       
   }
   
-
-//   const cookieValue = Cookies.get('myToken');
-//   console.log(cookieValue);
-//   const config ={
-//     headers: { Authorization: `Bearer ${cookieValue}` }
-//   }
-  
-  
-  
-  
-//   const queryInfo = `
-//     query{
-//       getMyInfo {
-//         id
-//       },
-//     }
-//   `
-//   axios.post(endpoint, { query: queryInfo }, config)
-//   .then((response) => {
-//       if (response.data.hasOwnProperty('errors')) {
-//       console.log("USUARIO NO ENCONTRADO O CONTRASEÑA INVALIDA !!!");
-//       setErrorForm("true");
-//       setLoadingForm(false);
-//       } else {
-//       console.log("Datos recibidos:");
-//       console.log("Test1:", response.data.data.getMyInfo);
-//       }
-//   })
-//   .catch((error) => {
-//       console.log("Error:", error);
-// // Aquí puedes manejar el error de acuerdo a tus necesidades
-// });
