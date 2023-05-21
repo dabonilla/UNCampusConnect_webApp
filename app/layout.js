@@ -17,7 +17,8 @@ export default function RootLayout({ children }) {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <body className={inter.className}>{children}</body>
+      <body style={{
+        backgroundColor: 'rgba(243, 244,   246, 1)', className: inter.className}}>{children}</body>
     </html>
   )
 }
