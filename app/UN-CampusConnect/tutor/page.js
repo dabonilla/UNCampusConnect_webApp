@@ -9,8 +9,77 @@ import Cookies from 'js-cookie';
 const endpoint = `http://${process.env.API_GATEWAY_URL}:${process.env.API_GATEWAY_PORT}/graphql`
 
 export default function Tutor() {
+  const cookieValue = Cookies.get('myToken');
+  const config = {
+    headers: { Authorization: `Bearer ${cookieValue}` }
+  }
   const username = Cookies.get('username');
   const email = Cookies.get('email');
+  const [tutorProfile, setTutorProfile] = useState({});
+  let id = '';
+  const queryId = `
+    query{
+      getMyInfo {
+        id
+      }
+    }
+  `
+  axios.post(endpoint, { query: queryId }, config)
+    .then((response) => {
+      if (response.data.hasOwnProperty('errors')) {
+        console.log("No user found");
+      } else {
+        id = response.data.data.getMyInfo.id;
+        console.log(id);
+      }
+    })
+    .catch((error) => {
+      console.log("Error:", error);
+    });
+  const onSubmit = (data) => {
+    const queryInfo = `
+    query{
+      getTutorProfile (id: "${id}") {
+        name
+        last_name
+        birth_place
+        birthdate
+        address
+        email
+        phone
+        description
+        photo
+        skills {
+          id
+          name}
+        tutor_languages {
+          language_id
+          level}
+        tutor_jobs {
+          job_id
+          position
+          start_year
+          end_year}
+        tutor_schools {
+          school_id
+          start_year
+          end_year
+          title}
+      }
+    }
+  `;
+    axios.post(endpoint, { query: queryInfo })
+      .then((response) => {
+        if (response.data.hasOwnProperty('errors')) {
+          console.log("Couldn't create profile");
+        } else {
+          setTutorProfile(response.data.data.getTutorProfile);
+        }
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+      });
+  };
   const [showForm, setShowForm] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
 
@@ -55,7 +124,7 @@ export default function Tutor() {
         </div>
         <div className="flex flex-col justify-start items-center   px-6 border-b border-gray-600 w-full">
           <button onClick={() => showMenu(true)} className="focus:outline-none focus:text-indigo-400 text-left  text-white flex justify-between items-center w-full  mb-3">
-            <p className="text-sm leading-5 mb-0 uppercase">Profile Overview</p>
+            <p className="text-sm leading-5 mb-0 uppercase">Opciones de perfil</p>
             <svg ref={icon} className="transform" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M18 15L12 9L6 15" stroke="currentColor" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
             </svg>
@@ -65,13 +134,13 @@ export default function Tutor() {
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m3.75 9v6m3-3H9m1.5-12H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
               </svg>
-              <p className="text-base leading-4 mb-0 ">Create</p>
+              <p className="text-base leading-4 mb-0 ">Crear</p>
             </button>
-            <button onClick={handleShowProfile} className="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-full md:w-52">
+            <button onClick={() => { handleShowProfile(); onSubmit(); }} className="flex justify-start items-center space-x-6 hover:text-white focus:bg-gray-700 focus:text-white hover:bg-gray-700 text-gray-400 rounded px-3 py-2  w-full md:w-52">
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
-              <p className="text-base leading-4 mb-0 ">Profile</p>
+              <p className="text-base leading-4 mb-0 ">Perfil</p>
             </button>
           </div>
         </div>
@@ -80,7 +149,7 @@ export default function Tutor() {
             <div className="flex justify-center items-center  space-x-2">
               <div>
                 <Image
-                  src={'https://i.ibb.co/L1LQtBm/Ellipse-1.png' || '/photo.png'}
+                  src={ tutorProfile.photo || '/photo.png'}
                   width={40}
                   height={40}
                   className="rounded-full"
@@ -127,7 +196,7 @@ export default function Tutor() {
             jobs_attributes: [{name: "IBM" position: "contador" start_year: "2022-01-01" end_year: "2023-01-01"}, {name: "Google" position: "Operador" start_year: "2022-01-01" end_year: "2023-01-01"}]}}) 
         }
       `;
-      axios.post(endpoint, { query: createTutorProfile })
+      axios.post(endpoint, { query: createTutorProfile }, config)
         .then(response => {
           console.log(response);
           if (response.data.hasOwnProperty('errors')) {
@@ -139,7 +208,6 @@ export default function Tutor() {
             console.log("Perfil creado");
             setErrorForm("false");
           }
-          //console.log(response.data.errors[0].code)
         })
         .catch(error => {
           console.log(error);
@@ -262,42 +330,42 @@ export default function Tutor() {
   function Profile() {
 
     return (
-      <div style={{ width: '400px' ,margin: '15px 0' }} className="bg-white rounded flex items-center justify-center shadow-lg p-2 px-2">
+      <div style={{ width: '400px', margin: '15px 0' }} className="bg-white rounded flex items-center justify-center shadow-lg p-2 px-2">
         <div className="col-span-2">
           <div className="flex items-center justify-center">
             <Image
-              src={'https://i.ibb.co/L1LQtBm/Ellipse-1.png' || '/photo.png'}
+              src={ tutorProfile.photo || '/photo.png'}
               width={128}
               height={128}
               className="rounded-full"
               quality={100}
             />
           </div>
-          <div className="text-gray-600" style={{ display: 'flex', justifyContent: 'center' }}>
+          <div className="text-gray-600" style={{ display: 'flex', paddingTop: 10, justifyContent: 'center' }}>
             <p className="font-medium text-lg">Datos Personales</p>
           </div>
           <div className="justify-items-center grid gap-2 gap-y-2 text-sm grid-cols-1 md:grid-cols-2">
             <div className="md:col-span-2 space-x-2">
-            <span className="h-10 leading-normal font-sans">Nombres</span>              
-            <span>Apellidos</span>
+              <span>{tutorProfile.name ? tutorProfile.name : "No hay datos disponibles"}</span>
+              <span>{tutorProfile.last_name ? tutorProfile.last_name : ""}</span>
             </div>
             <div className="md:col-span-2">
-            <span>Fecha de nacimiento</span>
+              <span>{tutorProfile.birthdate ? tutorProfile.birthdate : ""}</span>
             </div>
             <div className="md:col-span-2">
-              <span>Lugar de nacimiento</span>
+              <span>{tutorProfile.birth_place ? tutorProfile.birth_place : ""}</span>
             </div>
             <div className="md:col-span-2">
-              <span>Correo electrónico</span>
+              <span>{tutorProfile.email ? tutorProfile.email : ""}</span>
             </div>
             <div className="md:col-span-2">
-              <span>Dirección</span>
+              <span>{tutorProfile.address ? tutorProfile.address : ""}</span>
             </div>
             <div className="md:col-span-2">
-              <span>Celular</span>
+              <span>{tutorProfile.phone ? tutorProfile.phone : ""}</span>
             </div>
             <div className="md:col-span-2">
-              <span>Descripción</span>
+              <span>{tutorProfile.description ? tutorProfile.description : ""}</span>
             </div>
           </div>
         </div>
@@ -311,7 +379,7 @@ export default function Tutor() {
       <div style={{ display: showForm ? 'flex' : 'none', height: 'fit-content', justifyContent: 'center', alignItems: 'center', flexGrow: 1 }} >
         {showForm && <Form />}
       </div>
-      <div style={{ display: showProfile ? 'flex' : 'none',  alignItems: 'center', justifyContent: 'center', flexGrow: 1 }} >
+      <div style={{ display: showProfile ? 'flex' : 'none', alignItems: 'center', justifyContent: 'center', flexGrow: 1 }} >
         {showProfile && <Profile />}
       </div>
     </div>
