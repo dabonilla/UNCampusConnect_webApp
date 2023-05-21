@@ -1,12 +1,11 @@
 'use client'
 import Link from 'next/link';
 import axios from "axios";
-import Image from 'next/image';
 import React, { useState, useEffect } from 'react';
-import { useForm } from "react-hook-form";
-import { useRouter } from 'next/navigation'
-import Cookies from 'js-cookie';
+import styles from './Bienestar.module.css';
+import moment from 'moment';
 const endpoint = `http://${process.env.API_GATEWAY_URL}:${process.env.API_GATEWAY_PORT}/graphql`
+
 
 export default function PublicacionesBienestar() {
     const [publicaciones, setPublicaciones] = useState([]);
@@ -40,20 +39,43 @@ export default function PublicacionesBienestar() {
         });
     }, []); // Se ejecuta solo una vez al montar el componente
   
+    const formatDate = (date) => {
+      return moment(date).format('DD/MM/YYYY HH:mm');
+    };
+
     return (
-      <div>
-        <h1>Bienestar component</h1>
-        <section>
-          {publicaciones.map(publicacion => (
-            <article key={publicacion.publication_id}>
-              <Link href='/UN-CampusConnect/bienestarpublications/[id]'as={`/UN-CampusConnect/bienestarpublications/${publicacion.publication_id}`}>
-                <h2>{publicacion.title}</h2>
-                <p>{publicacion.publication_date}</p>
-              </Link>
-            </article>
-          ))}
-        </section>
+      <div className="container">
+        <div className='row'>
+          <h1 className='text-center mt-3'>Publicaciones</h1>
+        </div>
+
+        <div className='row mt-2'>
+          <div className='col-9'>
+            <h3>Crea una nueva publicación aquí:</h3>
+          </div>
+          <div className='col-3 d-flex justify-content-end'>
+            <Link class="nav-link" href='/UN-CampusConnect/bienestarpublications/create'as={`/UN-CampusConnect/bienestarpublications/create`}>
+              <button type="button" className={`btn  ${styles.btncustom}`}>
+                Crear Publicación
+              </button>
+            </Link>
+          </div>
+        </div>
+
+        <div className={`row mt-2`}>
+          <div>
+            {publicaciones.map(publicacion => (
+              <article key={publicacion.publication_id} className={` ${styles.publicacion} rounded mt-2`}>
+                <Link class="nav-link" href='/UN-CampusConnect/bienestarpublications/[id]'as={`/UN-CampusConnect/bienestarpublications/${publicacion.publication_id}`}>
+                  <h3 className={styles.title}>{publicacion.title}</h3>
+                  <p className={styles.date}>{formatDate(publicacion.publication_date)}</p>
+                </Link>
+              </article>
+            ))}
+          </div>
+        </div>
       </div>
+
     );
   }
   

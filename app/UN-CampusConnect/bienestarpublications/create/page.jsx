@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'
 import Cookies from 'js-cookie';
+import styles from './Create.module.css'
 const endpoint = `http://${process.env.API_GATEWAY_URL}:${process.env.API_GATEWAY_PORT}/graphql`
 
 
@@ -101,13 +102,15 @@ export default function CreatePublicacion ()  {
   };
 
   return (
-    <div>
-      <h1>Create Publication</h1>
+    <div className='container'>
+      <div className='row'>
+          <h1 className='text-center mt-3'>Crear Publicacion</h1>
+        </div>
       <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="mb-3">
-        <label className="form-label">Title</label>
+      <div className="mb-3 mt-4">
+        <h2 className="form-label">Titulo</h2>
         <input
-          className="form-control"
+          className="form-control form-control-lg"
           type="text"
           {...register("title", {
             required: "Este campo es requerido",
@@ -116,15 +119,15 @@ export default function CreatePublicacion ()  {
         />
         {errors.title && <span>{errors.title.message}</span>}
       </div>
-        <div className="mb-3">
-          <label className="form-label">Content</label>
-          <textarea className="form-control" {...register("content", { required: true })}></textarea>
+        <div className="mb-3 mt-4">
+          <h2 className="form-label">Contenido</h2>
+          <textarea className="form-control form-control-lg" {...register("content", { required: true })}></textarea>
           {errors.content && <span>This field is required</span>}
         </div>
-        <div className="mb-3">
-          <label className="form-label">Image</label>
+        <div className="mb-3 mt-4">
+          <h2 className="form-label">Imagen</h2>
           <input
-            className="form-control"
+            className="form-control form-control-lg"
             type="text"
             {...register("image", {
               required: "Este campo es requerido",
@@ -133,7 +136,9 @@ export default function CreatePublicacion ()  {
           />
           {errors.image && <span>{errors.image.message}</span>}
         </div>
-        <button className="btn btn-primary mb-3" type="submit">Create</button>
+        <div className="d-grid gap-2 mt-5">
+          <button className={`btn btn-primary btn-lg  ${styles.btncustom}`}type="submit">Crear</button>
+        </div>
       </form>
     </div>
   );

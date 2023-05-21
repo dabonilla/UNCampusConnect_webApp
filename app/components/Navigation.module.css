@@ -1,0 +1,24 @@
+.header {
+    background-color: #21413a;
+}
+
+.header a {
+    color: white;
+}
+
+.header a:hover {
+    color: #f5fbfb;
+}
+
+
+.btncustom {
+    color: #fff;
+    background-color: #61735A; /* Cambia el valor al color deseado */
+    border-color: #61735A; /* Cambia el valor al color deseado */
+    
+  }
+.btncustom:hover {
+    background-color: #f5fbfb;
+    color: #21413a;
+    /* Otros estilos */
+  }

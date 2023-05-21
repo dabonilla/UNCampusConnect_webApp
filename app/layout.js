@@ -2,7 +2,7 @@ import './globals.css'
 import Head from "next/head";
 import 'bootstrap/dist/css/bootstrap.css'
 import { Inter } from 'next/font/google'
-
+import { Navigation } from './components/Navigation';
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
@@ -17,8 +17,10 @@ export default function RootLayout({ children }) {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <body style={{
-        backgroundColor: 'rgba(243, 244,   246, 1)', className: inter.className}}>{children}</body>
+      <body className={`${inter.className} `} >
+        <Navigation />
+        {children}
+      </body>
     </html>
   )
 }
