@@ -1,14 +1,154 @@
-import styles from './Navigation.module.css'
+"use client"
+import React, { useState, useEffect } from 'react';
+import styles from './Navigation.module.css';
 import Link from 'next/link';
+import Cookies from 'js-cookie';
+const endpoint = `http://${process.env.API_GATEWAY_URL}:${process.env.API_GATEWAY_PORT}/graphql`;
 
-export function Navigation () {
+// Nuevo componente para realizar la consulta y obtener el rol
+function RoleComponent({ token, onRoleFetched }) {
+  const queryRole = `
+    query {
+      getMyInfo {
+        role
+      }
+    }
+  `;
+
+  useEffect(() => {
+    if (token) {
+      fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+        body: JSON.stringify({ query: queryRole })
+      })
+        .then((response) => {
+          if (response.status >= 400) {
+            throw new Error('Error fetching data');
+          } else {
+            return response.json();
+          }
+        })
+        .then((data) => {
+          const role = data.data.getMyInfo.role;
+          onRoleFetched(role);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    } else {
+      const role = 'no hay';
+      onRoleFetched(role);
+    }
+  }, [token, onRoleFetched]);
+
+  // No se muestra nada en este componente, ya que el rol se obtiene a través de la llamada a la función onRoleFetched
+
+  return null;
+}
+
+// Componente Navigation
+export function Navigation() {
+    const token = Cookies.get('myToken');
+    const [role, setRole] = useState('');
+  
+    const handleRoleFetched = (role) => {
+      setRole(role);
+    };
+  
+    let linksSection;
+  
+    switch (role) {
+      case 'tutor':
+        linksSection = (
+          <>
+            <div className="nav">
+                    <Link className="nav-link d-flex align-items-center" href='/UN-CampusConnect/bienestarpublications'as={`/UN-CampusConnect/bienestarpublications`}>
+                        Bienestar
+                    </Link>
+                    <Link className="nav-link" href="/UN-CampusConnect/signin" as="/UN-CampusConnect/signin">
+                        <button type="button" className={`btn btn-sm ${styles.btncustom}`}>
+                        Salir
+                        </button>
+                    </Link>
+                </div>
+            {/* Otros enlaces para el rol de tutor */}
+          </>
+        );
+        break;
+      case 'admin':
+        linksSection = (
+          <>
+            {
+                <div className="nav">
+                    <Link className="nav-link d-flex align-items-center" href='/UN-CampusConnect/admin/calls'as={`/UN-CampusConnect/admin/calls`}>
+                        Convocatorias
+                    </Link>
+                    <Link className="nav-link d-flex align-items-center" href='/UN-CampusConnect/bienestarpublications'as={`/UN-CampusConnect/bienestarpublications`}>
+                        Bienestar
+                    </Link>
+                    <Link className="nav-link" href="/UN-CampusConnect/signin" as="/UN-CampusConnect/signin">
+                        <button type="button" className={`btn btn-sm ${styles.btncustom}`}>
+                        Salir
+                        </button>
+                    </Link>
+                </div>
+            }
+          </>
+        );
+        break;
+      case 'student':
+        linksSection = (
+          <>
+            <div className="nav">
+                    <Link className="nav-link d-flex align-items-center" href='/UN-CampusConnect/student/calls'as={`/UN-CampusConnect/student/calls`}>
+                        Convocatorias
+                    </Link>
+                    <Link className="nav-link d-flex align-items-center" href='/UN-CampusConnect/bienestarpublications'as={`/UN-CampusConnect/bienestarpublications`}>
+                        Bienestar
+                    </Link>
+                    <Link className="nav-link" href="/UN-CampusConnect/signin" as="/UN-CampusConnect/signin">
+                        <button type="button" className={`btn btn-sm ${styles.btncustom}`}>
+                        Salir
+                        </button>
+                    </Link>
+                </div>
+          </>
+        );
+        break;
+      default:
+        linksSection = (
+            <>
+                <div className="nav">
+                    <Link className="nav-link d-flex align-items-center" href='/UN-CampusConnect/bienestarpublications'as={`/UN-CampusConnect/bienestarpublications`}>
+                        Bienestar
+                    </Link>
+                    <Link className="nav-link" href="/UN-CampusConnect/signin" as="/UN-CampusConnect/signin">
+                        <button type="button" className={`btn btn-sm ${styles.btncustom}`}>
+                            Iniciar Sesión
+                        </button>
+                    </Link>
+                    <Link className="nav-link" href="/UN-CampusConnect/signup" as="/UN-CampusConnect/signup">
+                        <button type="button" className={`btn btn-sm ${styles.btncustom}`}>
+                            Registrate
+                        </button>
+                    </Link>
+                </div>
+            </>
+          );
+        break;
+    }
+  
     return (
-        <header className={styles.header}>
-            <nav className="navbar bg-body-tertiary">
-            <div className="container-fluid">
+      <header className={styles.header}>
+        <nav className="navbar bg-body-tertiary">
+          <div className="container-fluid">
             <div>
-                <Link className="navbar-brand"  href='/UN-CampusConnect/homepage'as={`/UN-CampusConnect/homepage`} >
-                    <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="30" height="24" className="d-inline-block align-text-top mr-2" viewBox="0 0 40.000000 40.000000" preserveAspectRatio="xMidYMid meet">
+              <Link className="navbar-brand" href="/UN-CampusConnect/homepage" as="/UN-CampusConnect/homepage">
+              <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="30" height="24" className="d-inline-block align-text-top mr-2" viewBox="0 0 40.000000 40.000000" preserveAspectRatio="xMidYMid meet">
                         <g transform="translate(0.000000,40.000000) scale(0.015625,-0.015625)" fill="white" stroke="none">
                         <path d="M782 2361 c-260 -65 -478 -123 -484 -129 -9 -9 -9 -15 2 -26 8 -7 232 -67 497 -132 l483 -118 282 69 c156 37 287 72 292 76 6 5 6 9 2 9 -21 0 -573 71 -588 76 -29 9 -33 56 -5 67 7 2 195 -19 418 -47 l405 -50 82 19 c89 20 115 37 91 59 -14 13 -961 247 -989 245 -8 -1 -228 -54 -488 -118z"/>
                         <path d="M2083 2077 l-43 -10 0 -119 c0 -66 5 -128 10 -139 12 -22 59 -26 78 -7 13 13 18 289 5 287 -5 -1 -27 -6 -50 -12z"/>
@@ -24,22 +164,13 @@ export function Navigation () {
                         <path d="M1209 793 c-84 -52 -78 -164 19 -415 24 -65 48 -118 52 -118 11 0 86 197 110 286 35 136 23 210 -40 248 -36 20 -107 20 -141 -1z"/>
                         </g>
                     </svg>
-                    Campus Connect
-                </Link>
+                Campus Connect
+              </Link>
             </div>
-            <div class="nav">
-                <Link className="nav-link d-flex align-items-center" href='/UN-CampusConnect/bienestarpublications'as={`/UN-CampusConnect/bienestarpublications`}>
-                    Bienestar
-                </Link>
-                <Link class="nav-link" href='/UN-CampusConnect/signin'as={`/UN-CampusConnect/signin`}>
-                    <button type="button" className={`btn btn-sm ${styles.btncustom}`}>Iniciar Sesión</button>
-                </Link>
-                <Link class="nav-link" href='/UN-CampusConnect/signup'as={`/UN-CampusConnect/signup`}>
-                    <button type="button" className={`btn btn-sm ${styles.btncustom}`}>Registrate</button>
-                </Link>
-            </div>
-            </div>
-            </nav>
-        </header>
-    )
-}
+              {linksSection}
+          </div>
+        </nav>
+        <RoleComponent token={token} onRoleFetched={handleRoleFetched} />
+      </header>
+    );
+  }
