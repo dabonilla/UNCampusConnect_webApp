@@ -4,6 +4,7 @@ import axios from "axios";
 import ModalEdit from 'app/components/calls/modalEdit'
 import FormCreateCall from 'app/components/calls/formCreateCall'
 import ModalDelete from 'app/components/calls/modalDelete'
+import ModalViewParticipants from 'app/components/calls/modalViewParticipants'
 import * as bootstrap from 'bootstrap';
 
 const endpoint = `http://${process.env.API_GATEWAY_URL}:${process.env.API_GATEWAY_PORT}/graphql`
@@ -14,23 +15,6 @@ const data1 = [
     place: "Polideportivo",
     schedule: "Lunes y Miercoles de 2 a 4 de la tarde",
     deadline: "05/04/2023",
-    participants: [],
-    status: "Abierta"
-  },
-  {
-    maximunParticipants: 10,
-    nameGroup: "Grupo de corredores",
-    place: "Parque central",
-    schedule: "Martes y Jueves de 6 a 7 de la mañana",
-    participants: [],
-    status: "Abierta"
-  },
-  {
-    maximunParticipants: 10,
-    nameGroup: "Grupo de baile",
-    place: "Gimnasio del barrio",
-    schedule: "Lunes, Miercoles y Viernes de 5 a 6 de la tarde",
-    deadline: "15/11/2023",
     participants: [],
     status: "Abierta"
   }
@@ -63,6 +47,8 @@ export default function Form() {
 
 
   const handleShowDeleteView = (index,idModal,nameM) => {
+
+    console.log(index)
     setIdCall(index)
     setNameModal(nameM)
     const myModal = new bootstrap.Modal(document.getElementById(idModal))
@@ -70,28 +56,40 @@ export default function Form() {
   };
 
   const hideModal = (idModal) => {
+
     const myModal = document.getElementById(idModal);
     const modal = bootstrap.Modal.getInstance(myModal);
     modal.hide();
   }
   
   useEffect(() => {
+    //setCalls(null)
     setCalls(null)
-    async function getCalls() {
-        const response = await axios.post(endpoint, { query: queryCall })
-        console.log("response",response.data.data.getCalls)
-        setCalls(response.data.data.getCalls)
+    /*async function getCalls() {
+      const response = await axios.post(endpoint, { query: queryCall })
+      console.log("response",response.data.data.getCalls)
+      setCalls(response.data.data.getCalls)
     }
-    
-    getCalls()
+    console.log("cargando... ")
+    getCalls()*/
+    axios.post(endpoint, { query: queryCall })
+      .then(response =>{
+        setCalls(response.data.data.getCalls)
+        console.log("hola",response)
+      })
+      .catch(error =>{
+        console.log(error)
+      })
+      setIdCall(0)
   }, [reload])
 
     return (calls
       ?<div className='container mt-6'>
         <button style={{backgroundColor: "#21413a", color: 'white'}} type="button" onClick={() => handleShowDeleteView(1,'formCreate','create')} className="btn" >Crear convocatoria</button>
-        <ModalEdit id={'formEdit'} idCall={idCall}  hideModal={() => hideModal('formEdit')} data={calls} reloadPage={reloadPage} />
+        <ModalEdit setCalls={setCalls} id={'formEdit'} idCall={idCall}  hideModal={() => hideModal('formEdit')} data={calls} reloadPage={reloadPage} />
         <FormCreateCall hideModalCreate={() => hideModal('formCreate')} reloadPage={reloadPage} />
         <ModalDelete nameModal={nameModal}  data={calls} idCall={idCall} hideModal={() => hideModal('modalDelete')} reloadPage={reloadPage}/>
+        <ModalViewParticipants data={calls} idCall={idCall} />
         <table className="table table-striped">
           <thead>
             <tr>
@@ -119,7 +117,7 @@ export default function Form() {
                   </svg></button>
                 </td>
                 <td className='text-center'>
-                  <button style={{backgroundColor: "#21413a", color: 'white'}} type="button" onClick={() => handleShowDeleteView(index,'modalDelete','view')} className="btn "><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
+                  <button style={{backgroundColor: "#21413a", color: 'white'}} type="button" onClick={() => handleShowDeleteView(index,'modalViewParticipants','view')} className="btn "><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-search" viewBox="0 0 16 16">
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
                   </svg> </button>
                 </td>

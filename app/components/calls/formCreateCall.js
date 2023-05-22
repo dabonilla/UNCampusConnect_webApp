@@ -31,14 +31,15 @@ export default function FormCreateCall( {hideModalCreate, reloadPage}) {
       async function createCall() {
         await axios.post(endpoint, { query: queryCreate },config)
                                     .then(response=>{
-                                      console.log(response)
+                                      console.log("create",response)
+                                      reloadPage()
                                     })
                                     .catch(error =>{
                                       console.log(error)
                                     })
       }
       createCall()
-      reloadPage()
+      
     hideModalCreate('formCreate')
   };
   return (

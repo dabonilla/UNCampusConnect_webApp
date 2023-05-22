@@ -1,16 +1,16 @@
 'use client'
 import { useForm } from "react-hook-form";
 import React, { useState, useEffect } from 'react';
+import { useRouter } from 'next/navigation'
 import axios from "axios";
 const endpoint = `http://${process.env.API_GATEWAY_URL}:${process.env.API_GATEWAY_PORT}/graphql`
-const FormEdit = ({ data, idCall, hideModal, reloadPage }) => {
+const FormEdit = ({ data, idCall,setCalls, hideModal, reloadPage }) => {
   const [inputNameGroup, setInputNameGroup] = useState(data[idCall].nameGroup);
   const [inputMaximunParticipants, setInputMaximunParticipants] = useState(data[idCall].maximunParticipants);
   const [inputPlace, setInputPlace] = useState(data[idCall].place);
   const [inputSchedule, setInputSchedule] = useState(data[idCall].schedule);
-
+  const router = useRouter();
   const [errores, setErrores] = useState({});
-
   const preloaded = {
     nameGroup: data[idCall].nameGroup
   }
@@ -20,9 +20,8 @@ const FormEdit = ({ data, idCall, hideModal, reloadPage }) => {
     hideModal()
     console.log(data1);
   }
-
-
   const eventSave = () => {
+    console.log("idEdit: ", idCall)
     const nuevosErrores = {};
     if (inputNameGroup == '') {
       nuevosErrores.inputNameGroup = 'El nombre del grupo es obligatorio';
@@ -66,15 +65,18 @@ const FormEdit = ({ data, idCall, hideModal, reloadPage }) => {
       async function updateCall() {
         await axios.post(endpoint, { query: queryUpdate }, config)
           .then(response => {
-            console.log(response)
+            console.log("edir",response)
+            reloadPage()
+            //setCalls(response.data.data.getCalls)
           })
           .catch(error => {
             console.log(error)
           })
       }
       updateCall()
-      reloadPage()
+      
       hideModal('formEdit')
+      //router.push('/UN-CampusConnect/admin/calls')
     }
   }
 

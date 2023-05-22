@@ -4,7 +4,7 @@ import React from 'react';
 import FormEdit from 'app/components/calls/formEditCall'
 
 
-const ModalEdit = ({id,hideModal,data,idCall,reloadPage}) => {
+const ModalEdit = ({id,hideModal,setCalls,data,idCall,reloadPage}) => {
   return (
 
     <div className="modal fade" id={id} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -16,7 +16,7 @@ const ModalEdit = ({id,hideModal,data,idCall,reloadPage}) => {
         </div>
         <div className="modal-body">
           
-        <FormEdit  reloadPage ={reloadPage}  data ={data} idCall={idCall} hideModal ={hideModal} />
+        <FormEdit setCalls={setCalls}  reloadPage ={reloadPage}  data ={data} idCall={idCall} hideModal ={hideModal} />
         </div>
         {/*
         <div className="modal-footer">
