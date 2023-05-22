@@ -1,11 +1,9 @@
 'use client'
 import axios from "axios";
-import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
 import Image from 'next/image';
-import { useState } from 'react';
 import Cookies from 'js-cookie';
-
+import { useRef, useState } from 'react';
 const endpoint = `http://${process.env.API_GATEWAY_URL}:${process.env.API_GATEWAY_PORT}/graphql`
 
 export default function Tutor() {
@@ -101,7 +99,7 @@ export default function Tutor() {
       }
     };
     return (
-      <div style={{ minHeight: window.innerHeight }} className={`rounded-r ease-in-out transition duration-500 flex justify-start items-starts sm:w-64 bg-sidebar flex-col ${showForm ? '' : ''}`}>
+      <div style={{ minHeight: typeof window !== 'undefined' ? window.innerHeight : 600 }} className={`rounded-r ease-in-out transition duration-500 flex justify-start items-starts sm:w-64 bg-sidebar flex-col ${showForm ? '' : ''}`}>
         <div className="flex justify-start p-6 items-center space-x-3">
           <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="40.000000pt" height="40.000000pt" viewBox="0 0 40.000000 40.000000" preserveAspectRatio="xMidYMid meet">
 
@@ -150,6 +148,7 @@ export default function Tutor() {
               <div>
                 <Image
                   src={ tutorProfile.photo ? tutorProfile.photo : '/photo.png'}
+                  alt="Profile"
                   width={40}
                   height={40}
                   className="rounded-full"
