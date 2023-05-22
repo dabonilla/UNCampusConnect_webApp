@@ -99,7 +99,7 @@ export default function Tutor() {
       }
     };
     return (
-      <div style={{ minHeight: typeof window !== 'undefined' ? window.innerHeight : 600 }} className={`rounded-r ease-in-out transition duration-500 flex justify-start items-starts sm:w-64 bg-sidebar flex-col ${showForm ? '' : ''}`}>
+      <div style={{ minHeight: typeof window !== 'undefined' ? window.innerHeight : 768 }} className={`rounded-r ease-in-out transition duration-500 flex justify-start items-starts sm:w-64 bg-sidebar flex-col ${showForm ? '' : ''}`}>
         <div className="flex justify-start p-6 items-center space-x-3">
           <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="40.000000pt" height="40.000000pt" viewBox="0 0 40.000000 40.000000" preserveAspectRatio="xMidYMid meet">
 
