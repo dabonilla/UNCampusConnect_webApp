@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './Navigation.module.css';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
+
 const endpoint = `http://${process.env.API_GATEWAY_URL}:${process.env.API_GATEWAY_PORT}/graphql`;
 
 // Nuevo componente para realizar la consulta y obtener el rol
@@ -55,6 +56,13 @@ export function Navigation() {
     const token = Cookies.get('myToken');
     const [role, setRole] = useState('');
   
+
+    const logout = ()=>{
+      localStorage.removeItem('token');
+      Cookies.remove('myToken');
+    }
+
+
     const handleRoleFetched = (role) => {
       setRole(role);
     };
@@ -70,7 +78,7 @@ export function Navigation() {
                         Bienestar
                     </Link>
                     <Link className="nav-link" href="/UN-CampusConnect/signin" as="/UN-CampusConnect/signin">
-                        <button type="button" className={`btn btn-sm ${styles.btncustom}`}>
+                        <button onClick={logout} type="button" className={`btn btn-sm ${styles.btncustom}`}>
                         Salir
                         </button>
                     </Link>
@@ -90,8 +98,8 @@ export function Navigation() {
                     <Link className="nav-link d-flex align-items-center" href='/UN-CampusConnect/bienestarpublications'as={`/UN-CampusConnect/bienestarpublications`}>
                         Bienestar
                     </Link>
-                    <Link className="nav-link" href="/UN-CampusConnect/signin" as="/UN-CampusConnect/signin">
-                        <button type="button" className={`btn btn-sm ${styles.btncustom}`}>
+                    <Link  className="nav-link" href="/UN-CampusConnect/signin" as="/UN-CampusConnect/signin">
+                        <button onClick={logout} type="button" className={`btn btn-sm ${styles.btncustom}`}>
                         Salir
                         </button>
                     </Link>
@@ -110,8 +118,8 @@ export function Navigation() {
                     <Link className="nav-link d-flex align-items-center" href='/UN-CampusConnect/bienestarpublications'as={`/UN-CampusConnect/bienestarpublications`}>
                         Bienestar
                     </Link>
-                    <Link className="nav-link" href="/UN-CampusConnect/signin" as="/UN-CampusConnect/signin">
-                        <button type="button" className={`btn btn-sm ${styles.btncustom}`}>
+                    <Link  className="nav-link" href="/UN-CampusConnect/signin" as="/UN-CampusConnect/signin">
+                        <button onClick={logout} type="button" className={`btn btn-sm ${styles.btncustom}`}>
                         Salir
                         </button>
                     </Link>
