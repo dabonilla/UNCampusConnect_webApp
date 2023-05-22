@@ -149,7 +149,7 @@ export default function Tutor() {
             <div className="flex justify-center items-center  space-x-2">
               <div>
                 <Image
-                  src={ tutorProfile.photo || '/photo.png'}
+                  src={ tutorProfile.photo ? tutorProfile.photo : '/photo.png'}
                   width={40}
                   height={40}
                   className="rounded-full"
@@ -334,11 +334,12 @@ export default function Tutor() {
         <div className="col-span-2">
           <div className="flex items-center justify-center">
             <Image
-              src={ tutorProfile.photo || '/photo.png'}
+              src={tutorProfile.photo ? tutorProfile.photo : '/photo.png'}
               width={128}
               height={128}
               className="rounded-full"
               quality={100}
+              alt="Profile"
             />
           </div>
           <div className="text-gray-600" style={{ display: 'flex', paddingTop: 10, justifyContent: 'center' }}>
