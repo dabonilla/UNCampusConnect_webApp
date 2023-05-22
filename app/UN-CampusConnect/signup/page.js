@@ -15,7 +15,7 @@ export default function Signup() {
   const [loadingForm, setLoadingForm] = useState(false);
   const router = useRouter();
   const { register, formState: { errors }, handleSubmit } = useForm();
-  const changeLoading = ()=>{
+  const changeLoading = () => {
     setLoadingForm(true)
   }
   const onSubmit = data1 => {
@@ -34,79 +34,79 @@ export default function Signup() {
     axios.post(endpoint, { query: createUser })
       .then(response => {
         console.log(response)
-        if (response.data.hasOwnProperty('errors')){
+        if (response.data.hasOwnProperty('errors')) {
           console.log("CORREO O USUARIO YA EXISTEN !!!")
           setErrorForm("true")
           setLoadingForm(false)
         }
-        else{
+        else {
           console.log("REGISTRO VALIDO, FALTA CONFIRMAR")
           setErrorForm("false")
           router.push('/UN-CampusConnect/confirmation')
         }
         //console.log(response.data.errors[0].code)
-        
+
       })
       .catch(error => {
         console.log(error);
       });
-      changeLoading()
+    changeLoading()
   };
 
-  
+
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="d-flex align-content-center justify-content-center vh-100">
-        <div className="card my-auto">
-          <div className="card-header">
-            <div className="row">
-              <div className="col-4">
-                <Image 
-                  src="/logo.png"
-                  alt="logo" 
-                  width={50}
-                  height={50}
+          <div className="card my-auto">
+            <div className="card-header">
+              <div className="row">
+                <div className="col-4">
+                  <Image
+                    src="/logo.png"
+                    alt="logo"
+                    width={50}
+                    height={50}
                   />
-              </div>
-              <div className="col-8">
-                <div className="d-flex justify-content-end align-content-center">
-                  <div>
-                    <div className="d-flex justify-content-end">
-                      <b>
-                        <span className="d-block signInTitle">Registro</span>
-                      </b>
-                    </div>
-                    <div className="d-flex justify-content-end">
-                      <span className="d-block qplTitle fw-lighter">UN-CampusConnect</span>
+                </div>
+                <div className="col-8">
+                  <div className="d-flex justify-content-end align-content-center">
+                    <div>
+                      <div className="d-flex justify-content-end">
+                        <b>
+                          <span className="d-block signInTitle">Registro</span>
+                        </b>
+                      </div>
+                      <div className="d-flex justify-content-end">
+                        <span className="d-block qplTitle fw-lighter">UN-CampusConnect</span>
+                      </div>
                     </div>
                   </div>
                 </div>
+
               </div>
-
             </div>
-          </div>
 
-          <div className="card-body">
-            <div className="mb-3">
-              <label htmlFor="username" className="form-label">Nombre de usuario</label>
-              <input 
-                type="text" 
-                className="form-control" 
-                name="username"
-                id="username" 
-                {...register("username",{ required: true })}
-                aria-invalid={errors.username ? "true" : "false"}
-              />
-              {errors.username?.type ==='required' && <p className="text-danger" role="alert">Ingrese un nombre de usuario.</p>}
-              
-            </div>
-            <div className="mb-3">
-              <label htmlFor="email" className="form-label">Correo electrónico</label>
-              <input 
-                type="email" 
-                className="form-control" 
-                id="exampleFormControlInput1"
+            <div className="card-body">
+              <div className="mb-3">
+                <label htmlFor="username" className="form-label">Nombre de usuario</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="username"
+                  id="username"
+                  {...register("username", { required: true })}
+                  aria-invalid={errors.username ? "true" : "false"}
+                />
+                {errors.username?.type === 'required' && <p className="text-danger" role="alert">Ingrese un nombre de usuario.</p>}
+
+              </div>
+              <div className="mb-3">
+                <label htmlFor="email" className="form-label">Correo electrónico</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  id="exampleFormControlInput1"
                   {...register("email", { required: true, pattern: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/ })}
                   aria-invalid={errors.email ? "true" : "false"} />
                 {errors.email?.type === 'pattern' && <p className="text-danger" role="alert">Ingrese una dirección de correo válido</p>}
@@ -117,46 +117,46 @@ export default function Signup() {
                 <input
                   type="password"
                   className="form-control"
-                  id="inputPassword" 
-                  {...register("password",{ required: true })} 
+                  id="inputPassword"
+                  {...register("password", { required: true })}
                   aria-invalid={errors.password ? "true" : "false"} />
-                  {errors.password?.type ==='required' && <p class="text-danger" role="alert">Ingrese una contraseña.</p>}
+                {errors.password?.type === 'required' && <p class="text-danger" role="alert">Ingrese una contraseña.</p>}
 
               </div>
-            <div className="mb-3">
-            <label htmlFor="selectRole" className="form-label">Seleccione un rol</label>
-              <select 
-                className="form-select" 
-                aria-label="Default select example"
-                {...register("role")}
+              <div className="mb-3">
+                <label htmlFor="selectRole" className="form-label">Seleccione un rol</label>
+                <select
+                  className="form-select"
+                  aria-label="Default select example"
+                  {...register("role")}
                 >
-                <option value="student">Estudiante</option>
-                <option value="tutor">Tutor</option>
-                
-              </select>
+                  <option value="student">Estudiante</option>
+                  <option value="tutor">Tutor</option>
+
+                </select>
+              </div>
+              {errorForm == "true" ? <p className="text-danger" >Nombre de usuario o Correo electrónico ya existen</p> : <p></p>}
+              {loadingForm == true ? <div className="mb-3">
+                <div className='d-flex justify-content-center'>
+                  <button className="btn btn-dark" type="button" disabled>
+                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true">
+                    </span>Cargando...
+                  </button>
+                </div>
+              </div>
+                : <div className="mb-3">
+                  <div className='d-flex justify-content-center'>
+                    <button type="submit" className="btn btn-dark mb-3">Aceptar
+                    </button>
+                  </div>
+                </div>}
             </div>
-            {errorForm =="true" ? <p className="text-danger" >Nombre de usuario o Correo electrónico ya existen</p>:<p></p>}
-            {loadingForm == true ?<div className="mb-3">
-                                          <div className='d-flex justify-content-center'>
-                                            <button className="btn btn-dark" type="button" disabled>
-                                              <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true">
-                                              </span>Cargando...
-                                            </button>
-                                          </div>
-                                        </div>
-                                      :<div className="mb-3">
-                                        <div className='d-flex justify-content-center'>
-                                          <button type="submit" className="btn btn-dark mb-3">Aceptar
-                                          </button>
-                                        </div>
-                                      </div>}
-          </div>
 
-          <div className="card-footer d-flex justify-content-center align-content-center">
+            <div className="card-footer d-flex justify-content-center align-content-center">
 
+            </div>
           </div>
         </div>
-      </div>
 
       </form>
     </div>

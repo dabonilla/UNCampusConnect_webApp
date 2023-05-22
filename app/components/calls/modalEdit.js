@@ -1,13 +1,10 @@
 'use client'
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.css'
-import FormEdit from 'app/components/formEditCall'
+
+import FormEdit from 'app/components/calls/formEditCall'
 
 
 const ModalEdit = ({id,hideModal,data,idCall,reloadPage}) => {
-
-    
-
   return (
 
     <div className="modal fade" id={id} tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -19,7 +16,7 @@ const ModalEdit = ({id,hideModal,data,idCall,reloadPage}) => {
         </div>
         <div className="modal-body">
           
-        <FormEdit reloadPage ={reloadPage}  data ={data} idCall={idCall} hideModal ={hideModal} />
+        <FormEdit  reloadPage ={reloadPage}  data ={data} idCall={idCall} hideModal ={hideModal} />
         </div>
         {/*
         <div className="modal-footer">
