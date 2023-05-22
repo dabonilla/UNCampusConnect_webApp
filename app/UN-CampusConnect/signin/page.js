@@ -140,7 +140,7 @@ export default function Signin() {
                 {errorForm =="true" ? <p className="text-danger" >Credenciales invalidas</p>:<p></p>}
                 {loadingForm == true ?<div className="mb-3">
                                           <div className='d-flex justify-content-center'>
-                                            <button className="btn btn-dark" type="button" disabled>
+                                            <button className="btn btn-custom" type="button" disabled>
                                               <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true">
                                               </span>Cargando...
                                             </button>
@@ -148,7 +148,7 @@ export default function Signin() {
                                         </div>
                                       :<div className="mb-3">
                                         <div className='d-flex justify-content-center'>
-                                          <button type="submit" className="btn btn-dark mb-3">Aceptar
+                                          <button style={{backgroundColor: "#21413a", color: 'white'}}  type="submit" className="btn btn-dark mb-3">Aceptar
                                           </button>
                                         </div>
                                       </div>}

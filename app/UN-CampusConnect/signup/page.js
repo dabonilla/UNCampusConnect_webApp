@@ -146,7 +146,7 @@ export default function Signup() {
               </div>
                 : <div className="mb-3">
                   <div className='d-flex justify-content-center'>
-                    <button type="submit" className="btn btn-dark mb-3">Aceptar
+                    <button style={{backgroundColor: "#21413a", color: 'white'}} type="submit" className="btn mb-3">Aceptar
                     </button>
                   </div>
                 </div>}

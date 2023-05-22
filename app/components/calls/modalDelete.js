@@ -44,11 +44,11 @@ export default function ModalDelete({ hideModal, idCall, data, reloadPage, nameM
             {nameModal == 'view' ? <p>Lista de participantes inscritos: {data[idCall].participants.map((p) => (<p key={p}>{p}</p>))}</p> : <p>¿Está seguro de eliminar esta convocatoria? {data[idCall].nameGroup} </p>}
           </div>
           {nameModal == 'view' ? <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            <button style={{backgroundColor: "#61735A", color: 'white'}} type="button" className="btn " data-bs-dismiss="modal">Cerrar</button>
           </div>
             : <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-              <button type="button" className="btn btn-primary" onClick={confirmDelete}>Eliminar</button>
+              <button style={{backgroundColor: "#61735A", color: 'white'}} type="button" className="btn " data-bs-dismiss="modal">Cancelar</button>
+              <button style={{backgroundColor: "#21413a", color: 'white'}} type="button" className="btn " onClick={confirmDelete}>Eliminar</button>
             </div>}
         </div>
       </div>

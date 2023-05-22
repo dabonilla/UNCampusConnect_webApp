@@ -105,8 +105,8 @@ export default function FormCreateCall( {hideModalCreate, reloadPage}) {
                 {errors.schedule?.type === 'required' && <p className="text-danger" role="alert">El horario es obligatorio</p>}
 
               </div>
-              <button type="button" className="btn btn-secondary m-6" data-bs-dismiss="modal">Cancelar</button>
-              <button type="submit" className="btn btn-primary" >Aceptar</button>
+              <button style={{backgroundColor: "#61735A", color: 'white'}} type="button" className="btn  m-6" data-bs-dismiss="modal">Cancelar</button>
+              <button style={{backgroundColor: "#21413a", color: 'white'}} type="submit" className="btn " >Aceptar</button>
             </form>
           </div>
 

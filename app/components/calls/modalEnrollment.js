@@ -43,8 +43,8 @@ export default function ModalEnrollment({hideModal,idCall,data,reloadPage}) {
           </div>
           {
         <div className="modal-footer">
-          <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-          <button type="button" className="btn btn-primary" onClick={enrollment}>Inscribir</button>
+          <button style={{backgroundColor: "#61735A", color: 'white'}} type="button" className="btn " data-bs-dismiss="modal">Cancelar</button>
+          <button style={{backgroundColor: "#21413a", color: 'white'}} type="button" className="btn " onClick={enrollment}>Inscribir</button>
         </div>
           }
         </div>

@@ -115,8 +115,8 @@ const FormEdit = ({ data, idCall, hideModal, reloadPage }) => {
         {errores.inputSchedule && <p className="text-danger">{errores.inputSchedule}</p>}
       </div>
       <div className="modal-footer">
-        <button type="button" className="btn btn-secondary mr-6" data-bs-dismiss="modal">Cancelar</button>
-        <button type="button" onClick={() => eventSave()} className="btn btn-primary" >Guardar</button>
+        <button style={{backgroundColor: "#61735A", color: 'white'}} type="button" className="btn  mr-6" data-bs-dismiss="modal">Cancelar</button>
+        <button style={{backgroundColor: "#21413a", color: 'white'}} type="button" onClick={() => eventSave()} className="btn " >Guardar</button>
       </div>
 
     </form>
