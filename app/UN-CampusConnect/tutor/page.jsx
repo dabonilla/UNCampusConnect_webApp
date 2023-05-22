@@ -38,30 +38,30 @@ export default function Tutor() {
     const queryInfo = `
     query{
       getTutorProfile (id: "${id}") {
-        name
-        last_name
-        birth_place
-        birthdate
-        address
-        email
-        phone
-        description
-        photo
+        name,
+        last_name,
+        birth_place,
+        birthdate,
+        address,
+        email,
+        phone,
+        description,
+        photo,
         skills {
-          id
-          name}
+          id,
+          name},
         tutor_languages {
-          language_id
-          level}
+          language_id,
+          level},
         tutor_jobs {
-          job_id
-          position
-          start_year
-          end_year}
+          job_id,
+          position,
+          start_year,
+          end_year},
         tutor_schools {
-          school_id
-          start_year
-          end_year
+          school_id,
+          start_year,
+          end_year,
           title}
       }
     }
