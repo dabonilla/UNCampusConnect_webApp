@@ -179,7 +179,7 @@ export default function Tutor() {
       changeLoading();
       const createTutorProfile = `
         mutation {
-          createTutorProfile(tutor: {tutor: {
+          createTutorProfile(tutor: {
             name: "${data.name}", 
             last_name: "${data.last_name}",
             birth_place: "${data.birth_place}", 
@@ -192,7 +192,7 @@ export default function Tutor() {
             skills_attributes: [{name: "Bailar"}, {name: "Correr"}], 
             languages_attributes: [{name: "Inglés", level: "C1"}, {name: "Coreano", level: "B1"}], 
             schools_attributes: [{name: "Colboy" start_year: "2002-02-02" end_year: "2003-02-02" title: "Ingeniero"}, {name: "UNAL" start_year: "2002-02-02" end_year: "2003-02-02" title: "Técnico"}], 
-            jobs_attributes: [{name: "IBM" position: "contador" start_year: "2022-01-01" end_year: "2023-01-01"}, {name: "Google" position: "Operador" start_year: "2022-01-01" end_year: "2023-01-01"}]}}) 
+            jobs_attributes: [{name: "IBM" position: "contador" start_year: "2022-01-01" end_year: "2023-01-01"}, {name: "Google" position: "Operador" start_year: "2022-01-01" end_year: "2023-01-01"}]}) 
         }
       `;
       axios.post(endpoint, { query: createTutorProfile }, config)
