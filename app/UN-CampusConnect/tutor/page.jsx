@@ -34,7 +34,7 @@ export default function Tutor() {
     .catch((error) => {
       console.log("Error:", error);
     });
-  const onSubmit = (data) => {
+  const onSubmit = () => {
     const queryInfo = `
     query{
       getTutorProfile (id: "${id}") {
