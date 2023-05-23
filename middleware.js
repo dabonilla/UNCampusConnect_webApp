@@ -36,6 +36,8 @@ export async function Middleware(request) {
                   .then((data) =>{
                     role = data.data.getMyInfo.role
                 })
+
+  console.log('role middleware', role)
                 
   if (role != ''){
     if(pathName.startsWith('/UN-CampusConnect/admin') && role != 'admin'){
@@ -44,7 +46,7 @@ export async function Middleware(request) {
     else if(pathName.startsWith('/UN-CampusConnect/student') && role != 'student'){
       return NextResponse.redirect(new URL('/UN-CampusConnect/403', request.url))
     }
-    else if(pathName.startsWith('/UN-CampusConnect/student') && role != 'tutor'){
+    else if(pathName.startsWith('/UN-CampusConnect/tutor') && role != 'tutor'){
       return NextResponse.redirect(new URL('/UN-CampusConnect/403', request.url))
     }else if (pathName.startsWith('/UN-CampusConnect/bienestarpublications/create')) {
       return NextResponse.next();
