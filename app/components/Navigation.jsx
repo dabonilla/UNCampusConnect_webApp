@@ -155,7 +155,7 @@ export function Navigation() {
         <nav className="navbar bg-body-tertiary">
           <div className="container-fluid">
             <div>
-              <Link className="navbar-brand" href="/UN-CampusConnect/homepage" as="/UN-CampusConnect/homepage">
+              <Link className="navbar-brand" href="/UN-CampusConnect/bienestarpublications" as="/UN-CampusConnect/bienestarpublications">
               <svg xmlns="http://www.w3.org/2000/svg" version="1.0" width="30" height="24" className="d-inline-block align-text-top mr-2" viewBox="0 0 40.000000 40.000000" preserveAspectRatio="xMidYMid meet">
                         <g transform="translate(0.000000,40.000000) scale(0.015625,-0.015625)" fill="white" stroke="none">
                         <path d="M782 2361 c-260 -65 -478 -123 -484 -129 -9 -9 -9 -15 2 -26 8 -7 232 -67 497 -132 l483 -118 282 69 c156 37 287 72 292 76 6 5 6 9 2 9 -21 0 -573 71 -588 76 -29 9 -33 56 -5 67 7 2 195 -19 418 -47 l405 -50 82 19 c89 20 115 37 91 59 -14 13 -961 247 -989 245 -8 -1 -228 -54 -488 -118z"/>
@@ -172,7 +172,7 @@ export function Navigation() {
                         <path d="M1209 793 c-84 -52 -78 -164 19 -415 24 -65 48 -118 52 -118 11 0 86 197 110 286 35 136 23 210 -40 248 -36 20 -107 20 -141 -1z"/>
                         </g>
                     </svg>
-                Campus Connect
+                  Campus Connect
               </Link>
             </div>
               {linksSection}

@@ -59,13 +59,13 @@ export default function Signin() {
             .then(response =>{
               const role = response.data.data.getMyInfo.role
               if (role == "admin"){
-                router.push('/UN-CampusConnect/admin')
+                router.push('/UN-CampusConnect/bienestarpublications')
               }
               else if (role == "student"){
-                router.push('/UN-CampusConnect/student')
+                router.push('/UN-CampusConnect/bienestarpublications')
               }
               else if (role == "tutor"){
-                router.push('/UN-CampusConnect/tutor')
+                router.push('/UN-CampusConnect/bienestarpublications')
               }
               
             })
