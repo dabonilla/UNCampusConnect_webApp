@@ -6,7 +6,7 @@ import Cookies from 'js-cookie';
 import moment from 'moment';
 import styles from './Bienestarid.module.css';
 const endpoint = `http://${process.env.API_GATEWAY_URL}:${process.env.API_GATEWAY_PORT}/graphql`
-
+import { Navigation } from './../../../components/Navigation';
 
 export default function PublicacionesBienestarId({ params }) {
     const { id } = params;
@@ -85,28 +85,33 @@ export default function PublicacionesBienestarId({ params }) {
     };
 
     return (
-      <div className="container">
-        <section>
-          {publicaciones.map((publicacion) => (
-            <article key={publicacion.publication_id}>
-              <div className="row">
-                <h1 className="text-center mt-3">{publicacion.title}</h1>
-              </div>
-              <div className="row mt-3">
-                <div className="col-6">
-                  <h3>Autor: {username}</h3>
+      <div>
+        <div>
+          <Navigation />
+        </div>
+        <div className="container">
+          <section>
+            {publicaciones.map((publicacion) => (
+              <article key={publicacion.publication_id}>
+                <div className="row">
+                  <h1 className="text-center mt-3">{publicacion.title}</h1>
                 </div>
-                <div className="col-6 d-flex justify-content-end">
-                  <h3>Fecha: {formatDate(publicacion.publication_date)}</h3>
+                <div className="row mt-3">
+                  <div className="col-6">
+                    <h3>Autor: {username}</h3>
+                  </div>
+                  <div className="col-6 d-flex justify-content-end">
+                    <h3>Fecha: {formatDate(publicacion.publication_date)}</h3>
+                  </div>
                 </div>
-              </div>
-              <div className={styles['image-container']}>
-                <img src={publicacion.image} alt={publicacion.title} className="img-fluid" />
-              </div>
-              <h4 className={`mt-4  ${styles['break-word']}`}>{publicacion.content_publication} </h4>
-            </article>
-          ))}
-        </section>
+                <div className={styles['image-container']}>
+                  <img src={publicacion.image} alt={publicacion.title} className="img-fluid" />
+                </div>
+                <h4 className={`mt-4  ${styles['break-word']}`}>{publicacion.content_publication} </h4>
+              </article>
+            ))}
+          </section>
+        </div>
       </div>
     );
       

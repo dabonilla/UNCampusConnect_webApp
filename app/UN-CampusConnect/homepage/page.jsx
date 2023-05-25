@@ -46,7 +46,7 @@ export default function Homepage() {
 									<div className="text">
 										<h1 className="mb-4 mt-3">Bienvenido a <br /><span>UN Campus Connect</span></h1>
 										<br />
-										<p><a href="/UN-CampusConnect/signin" className="btn btn-primary py-4 px-5">Sign in</a> <a href="/UN-CampusConnect/signup" className="btn btn-white btn-outline-white py-4 px-5">Sign up</a></p>
+										<p><a href="/UN-CampusConnect/signin" className="btn btn-primary py-4 px-5">Ingresar</a> <a href="/UN-CampusConnect/signup" className="btn btn-white btn-outline-white py-4 px-5">Registrate</a></p>
 									</div>
 								</div>
 							</div>

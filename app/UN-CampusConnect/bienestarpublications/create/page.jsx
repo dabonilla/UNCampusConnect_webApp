@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation'
 import Cookies from 'js-cookie';
 import styles from './Create.module.css'
 const endpoint = `http://${process.env.API_GATEWAY_URL}:${process.env.API_GATEWAY_PORT}/graphql`
-
+import { Navigation } from './../../../components/Navigation';
 
 export default function CreatePublicacion ()  {
   const { register, formState: { errors }, handleSubmit } = useForm();
@@ -102,44 +102,49 @@ export default function CreatePublicacion ()  {
   };
 
   return (
-    <div className='container'>
-      <div className='row'>
-          <h1 className='text-center mt-3'>Crear Publicacion</h1>
-        </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="mb-3 mt-4">
-        <h2 className="form-label">Titulo</h2>
-        <input
-          className="form-control form-control-lg"
-          type="text"
-          {...register("title", {
-            required: "Este campo es requerido",
-            maxLength: { value: 50, message: "Debe tener menos de 50 caracteres" }
-          })}
-        />
-        {errors.title && <span>{errors.title.message}</span>}
+    <div>
+      <div>
+        <Navigation />
       </div>
+      <div className='container'>
+        <div className='row'>
+            <h1 className='text-center mt-3'>Crear Publicacion</h1>
+          </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-3 mt-4">
-          <h2 className="form-label">Contenido</h2>
-          <textarea className="form-control form-control-lg" {...register("content", { required: true })}></textarea>
-          {errors.content && <span>This field is required</span>}
-        </div>
-        <div className="mb-3 mt-4">
-          <h2 className="form-label">Imagen</h2>
+          <h2 className="form-label">Titulo</h2>
           <input
             className="form-control form-control-lg"
             type="text"
-            {...register("image", {
+            {...register("title", {
               required: "Este campo es requerido",
-              maxLength: { value: 100, message: "Debe tener menos de 100 caracteres" }
+              maxLength: { value: 50, message: "Debe tener menos de 50 caracteres" }
             })}
           />
-          {errors.image && <span>{errors.image.message}</span>}
+          {errors.title && <span>{errors.title.message}</span>}
         </div>
-        <div className="d-grid gap-2 mt-5">
-          <button className={`btn btn-primary btn-lg  ${styles.btncustom}`}type="submit">Crear</button>
-        </div>
-      </form>
+          <div className="mb-3 mt-4">
+            <h2 className="form-label">Contenido</h2>
+            <textarea className="form-control form-control-lg" {...register("content", { required: true })}></textarea>
+            {errors.content && <span>This field is required</span>}
+          </div>
+          <div className="mb-3 mt-4">
+            <h2 className="form-label">Imagen</h2>
+            <input
+              className="form-control form-control-lg"
+              type="text"
+              {...register("image", {
+                required: "Este campo es requerido",
+                maxLength: { value: 100, message: "Debe tener menos de 100 caracteres" }
+              })}
+            />
+            {errors.image && <span>{errors.image.message}</span>}
+          </div>
+          <div className="d-grid gap-2 mt-5">
+            <button className={`btn btn-primary btn-lg  ${styles.btncustom}`}type="submit">Crear</button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

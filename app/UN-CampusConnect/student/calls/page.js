@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import ModalEnrollment from 'app/components/calls/modalEnrollment'
 import * as bootstrap from 'bootstrap';
-
+import { Navigation } from './../../../components/Navigation';
 const endpoint = `http://${process.env.API_GATEWAY_URL}:${process.env.API_GATEWAY_PORT}/graphql`
 const data1 = [
   {
@@ -78,7 +78,12 @@ export default function TableCalls() {
 
 
   return (calls
-    ? <div className='container mt-6'>
+    ? 
+      <div>
+        <div>
+          <Navigation />
+        </div>
+      <div className='container mt-6'>
       <ModalEnrollment hideModal={() => hideModal('modalEnrollment')} idCall={idCall} data={calls} reloadPage={reloadPage} />
       <table className="table table-striped">
         <thead>
@@ -109,9 +114,16 @@ export default function TableCalls() {
         </tbody>
       </table>
     </div>
-    : <div className="d-flex justify-content-center">
-      <div className="spinner-border" role="status">
-        <span className="visually-hidden">Loading...</span>
+      </div>
+    : 
+    <div>
+      <div>
+        <Navigation />
+      </div>
+      <div className="d-flex justify-content-center">
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
       </div>
     </div>
 

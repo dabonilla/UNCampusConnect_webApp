@@ -6,7 +6,7 @@ import FormCreateCall from 'app/components/calls/formCreateCall'
 import ModalDelete from 'app/components/calls/modalDelete'
 import ModalViewParticipants from 'app/components/calls/modalViewParticipants'
 import * as bootstrap from 'bootstrap';
-
+import { Navigation } from './../../../components/Navigation';
 const endpoint = `http://${process.env.API_GATEWAY_URL}:${process.env.API_GATEWAY_PORT}/graphql`
 const data1 = [
   {
@@ -84,7 +84,12 @@ export default function Form() {
   }, [reload])
 
     return (calls
-      ?<div className='container mt-6'>
+      ?
+      <div>
+        <div>
+          <Navigation />
+        </div>
+      <div className='container mt-6'>
         <button style={{backgroundColor: "#21413a", color: 'white'}} type="button" onClick={() => handleShowDeleteView(1,'formCreate','create')} className="btn" >Crear convocatoria</button>
         <ModalEdit setCalls={setCalls} id={'formEdit'} idCall={idCall}  hideModal={() => hideModal('formEdit')} data={calls} reloadPage={reloadPage} />
         <FormCreateCall hideModalCreate={() => hideModal('formCreate')} reloadPage={reloadPage} />
@@ -131,10 +136,17 @@ export default function Form() {
           </tbody>
         </table>
       </div>
-    :<div className="d-flex justify-content-center">
-    <div className="spinner-border" role="status">
-      <span className="visually-hidden">Loading...</span>
     </div>
-  </div>
+    :
+    <div>
+        <div>
+          <Navigation />
+        </div>
+        <div className="d-flex justify-content-center">
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+      </div>
+    </div>
     )
 }

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './Navigation.module.css';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
-
+import { useRouter } from 'next/navigation'
 const endpoint = `http://${process.env.API_GATEWAY_URL}:${process.env.API_GATEWAY_PORT}/graphql`;
 
 // Nuevo componente para realizar la consulta y obtener el rol
@@ -55,7 +55,7 @@ function RoleComponent({ token, onRoleFetched }) {
 export function Navigation() {
     const token = Cookies.get('myToken');
     const [role, setRole] = useState('');
-  
+    const router = useRouter();
 
     const logout = ()=>{
       localStorage.removeItem('token');
