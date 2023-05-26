@@ -78,6 +78,7 @@ export default function PublicacionesBienestarId({ params }) {
     // Aquí puedes manejar el error de acuerdo a tus necesidades
   });
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []); // Se ejecuta solo una vez al montar el componente
   
     const formatDate = (date) => {

@@ -44,6 +44,7 @@ function RoleComponent({ token, onRoleFetched }) {
       const role = 'no hay';
       onRoleFetched(role);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token, onRoleFetched]);
 
   // No se muestra nada en este componente, ya que el rol se obtiene a través de la llamada a la función onRoleFetched

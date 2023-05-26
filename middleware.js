@@ -1,7 +1,5 @@
 'use client'
 import { NextResponse } from 'next/server';
-import axios from "axios";
-import { useRouter } from 'next/navigation'
 // This function can be marked `async` if using `await` inside
 const endpoint = `http://${process.env.API_GATEWAY_URL}:${process.env.API_GATEWAY_PORT}/graphql`
 
@@ -15,7 +13,6 @@ export async function Middleware(request) {
   }
   `
   const pathName= request.nextUrl.pathname
-  console.log("apthhhh", pathName)
   const token = request.cookies.get('myToken')
   if ( token == undefined){
     return NextResponse.redirect(new URL('/UN-CampusConnect/signin', request.url))
@@ -36,8 +33,6 @@ export async function Middleware(request) {
                   .then((data) =>{
                     role = data.data.getMyInfo.role
                 })
-
-  console.log('role middleware', role)
                 
   if (role != ''){
     if(pathName.startsWith('/UN-CampusConnect/admin') && role != 'admin'){

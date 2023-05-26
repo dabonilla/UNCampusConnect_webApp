@@ -1,8 +1,9 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
-import ModalEnrollment from 'app/components/calls/modalEnrollment'
+//import ModalEnrollment from 'app/components/calls/modalEnrollment'
 import * as bootstrap from 'bootstrap';
+import dynamic from 'next/dynamic';
 import { Navigation } from './../../../components/Navigation';
 const endpoint = `http://${process.env.API_GATEWAY_URL}:${process.env.API_GATEWAY_PORT}/graphql`
 const data1 = [
@@ -33,6 +34,7 @@ const data1 = [
     status: "Abierta"
   }
 ]
+const ModalEnrollment = dynamic(() => import('app/components/calls/modalEnrollment'), { ssr: false });
 
 const queryCall = `
     query{
@@ -47,23 +49,32 @@ const queryCall = `
       }
     }
     `
+
 export default function TableCalls() {
   const [calls, setCalls] = useState(data1);
   const [idCall, setIdCall] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [show, setShow] = useState(false);
+
   const [reload, setReload] = useState(0);
   const reloadPage = () => setReload(reload + 1);
 
   const hideModal = (idModal) => {
-    const myModal = document.getElementById(idModal);
-    const modal = bootstrap.Modal.getInstance(myModal);
-    modal.hide();
+    if (typeof document !== 'undefined') {
+      const myModal = document.getElementById(idModal);
+      const modal = bootstrap.Modal.getInstance(myModal);
+      modal.hide();}
+    
   }
   const handleShow = (index) => {
-    setIdCall(index)
-    const myModal = new bootstrap.Modal(document.getElementById('modalEnrollment'))
-    myModal.show();
+    if (typeof document !== 'undefined') {
+      setIdCall(index)
+      const myModal = new bootstrap.Modal(document.getElementById('modalEnrollment'))
+      myModal.show();}
+    
   };
+
+
 
   useEffect(() => {
     setCalls(null)

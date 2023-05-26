@@ -2,12 +2,18 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import ModalEdit from 'app/components/calls/modalEdit'
-import FormCreateCall from 'app/components/calls/formCreateCall'
-import ModalDelete from 'app/components/calls/modalDelete'
-import ModalViewParticipants from 'app/components/calls/modalViewParticipants'
+import dynamic from 'next/dynamic';
+
+//import FormCreateCall from 'app/components/calls/formCreateCall'
+//import ModalDelete from 'app/components/calls/modalDelete'
+//import ModalViewParticipants from 'app/components/calls/modalViewParticipants'
 import * as bootstrap from 'bootstrap';
 import { Navigation } from './../../../components/Navigation';
 const endpoint = `http://${process.env.API_GATEWAY_URL}:${process.env.API_GATEWAY_PORT}/graphql`
+
+const FormCreateCall = dynamic(() => import('app/components/calls/formCreateCall'), { ssr: false });
+const ModalDelete = dynamic(() => import('app/components/calls/modalDelete'), { ssr: false });
+const ModalViewParticipants = dynamic(() => import('app/components/calls/modalViewParticipants'), { ssr: false });
 
 const queryCall = `
     query{
@@ -34,21 +40,30 @@ export default function Form() {
 
   const handleShowDeleteView = (index, idModal, nameM) => {
 
-    setIdCall(index)
+    if (typeof document !== 'undefined') {
+      setIdCall(index)
     setNameModal(nameM)
     const myModal = new bootstrap.Modal(document.getElementById(idModal))
     myModal.show();
+    }
+    
   };
   
   const handleShowCreate = ( idModal ) => {
-    const myModal = new bootstrap.Modal(document.getElementById(idModal))
+    if (typeof document !== 'undefined') {
+      const myModal = new bootstrap.Modal(document.getElementById(idModal))
     myModal.show();
+    }
+    
   };
 
   const hideModal = (idModal) => {
-    const myModal = document.getElementById(idModal);
+    if (typeof document !== 'undefined') {
+      const myModal = document.getElementById(idModal);
     const modal = bootstrap.Modal.getInstance(myModal);
     modal.hide();
+    }
+    
   }
 
   useEffect(() => {

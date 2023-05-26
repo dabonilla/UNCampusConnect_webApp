@@ -10,9 +10,11 @@ export default function ModalEnrollment({hideModal,idCall,data,reloadPage}) {
     setLoadingForm(true)
   }
   const handleShowModal = () => {
-
-    const myModal = new bootstrap.Modal(document.getElementById('modal'))
-    myModal.show();
+    if (typeof document !== 'undefined') {
+      const myModal = new bootstrap.Modal(document.getElementById('modal'))
+      myModal.show();
+    }
+    
   };
 
   const enrollment= () =>{

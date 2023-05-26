@@ -1,8 +1,9 @@
 'use client'
 import React from 'react';
+import dynamic from 'next/dynamic';
+//import FormEdit from 'app/components/calls/formEditCall'
 
-import FormEdit from 'app/components/calls/formEditCall'
-
+const FormEdit = dynamic(() => import('app/components/calls/formEditCall'), { ssr: false });
 
 const ModalEdit = ({id,hideModal,setCalls,data,idCall,reloadPage}) => {
   return (
