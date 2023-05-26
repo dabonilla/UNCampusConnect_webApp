@@ -31,7 +31,6 @@ const queryCall = `
 export default function Form() {
   const [calls, setCalls] = useState(null);
   const [idCall, setIdCall] = useState(0);
-  const [loading, setLoading] = useState(false);
   const [empty, setEmpty] = useState(false);
   const [reload, setReload] = useState(0);
   const [nameModal, setNameModal] = useState('');
@@ -42,28 +41,28 @@ export default function Form() {
 
     if (typeof document !== 'undefined') {
       setIdCall(index)
-    setNameModal(nameM)
-    const myModal = new bootstrap.Modal(document.getElementById(idModal))
-    myModal.show();
+      setNameModal(nameM)
+      const myModal = new bootstrap.Modal(document.getElementById(idModal))
+      myModal.show();
     }
-    
+
   };
-  
-  const handleShowCreate = ( idModal ) => {
+
+  const handleShowCreate = (idModal) => {
     if (typeof document !== 'undefined') {
       const myModal = new bootstrap.Modal(document.getElementById(idModal))
-    myModal.show();
+      myModal.show();
     }
-    
+
   };
 
   const hideModal = (idModal) => {
     if (typeof document !== 'undefined') {
       const myModal = document.getElementById(idModal);
-    const modal = bootstrap.Modal.getInstance(myModal);
-    modal.hide();
+      const modal = bootstrap.Modal.getInstance(myModal);
+      modal.hide();
     }
-    
+
   }
 
   useEffect(() => {
@@ -92,11 +91,11 @@ export default function Form() {
       </div>
       <div className='container mt-6'>
         {empty ? <div>
-          <button style={{ backgroundColor: "#21413a", color: 'white' }} type="button" onClick={() => handleShowCreate( 'formCreate')} className="btn" >Crear convocatoria</button>
+          <button style={{ backgroundColor: "#21413a", color: 'white' }} type="button" onClick={() => handleShowCreate('formCreate')} className="btn" >Crear convocatoria</button>
           <FormCreateCall hideModalCreate={() => hideModal('formCreate')} reloadPage={reloadPage} />
           <h2>No hay convocatorias</h2>
         </div> : <div>
-          <button style={{ backgroundColor: "#21413a", color: 'white' }} type="button" onClick={() => handleShowCreate( 'formCreate')} className="btn" >Crear convocatoria</button>
+          <button style={{ backgroundColor: "#21413a", color: 'white' }} type="button" onClick={() => handleShowCreate('formCreate')} className="btn" >Crear convocatoria</button>
           <FormCreateCall hideModalCreate={() => hideModal('formCreate')} reloadPage={reloadPage} />
           <ModalEdit setCalls={setCalls} id={'formEdit'} idCall={idCall} hideModal={() => hideModal('formEdit')} data={calls} reloadPage={reloadPage} />
           <ModalDelete nameModal={nameModal} data={calls} idCall={idCall} hideModal={() => hideModal('modalDelete')} reloadPage={reloadPage} />
