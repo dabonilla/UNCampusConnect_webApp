@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation'
 import axios from "axios";
 const endpoint = `http://${process.env.API_GATEWAY_URL}:${process.env.API_GATEWAY_PORT}/graphql`
-const FormEdit = ({ data, idCall,setCalls, hideModal, reloadPage }) => {
+const FormEdit = ({ data, idCall, hideModal, reloadPage }) => {
   const [inputNameGroup, setInputNameGroup] = useState(data[idCall].nameGroup);
   const [inputMaximunParticipants, setInputMaximunParticipants] = useState(data[idCall].maximunParticipants);
   const [inputPlace, setInputPlace] = useState(data[idCall].place);

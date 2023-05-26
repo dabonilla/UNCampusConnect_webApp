@@ -16,7 +16,7 @@ const ModalEdit = ({id,hideModal,setCalls,data,idCall,reloadPage}) => {
         </div>
         <div className="modal-body">
           
-        <FormEdit setCalls={setCalls}  reloadPage ={reloadPage}  data ={data} idCall={idCall} hideModal ={hideModal} />
+        <FormEdit  reloadPage ={reloadPage}  data ={data} idCall={idCall} hideModal ={hideModal} />
         </div>
         {/*
         <div className="modal-footer">
