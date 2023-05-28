@@ -51,7 +51,7 @@ export async function Middleware(request) {
 }
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/UN-CampusConnect/admin','/UN-CampusConnect/admin/calls','/UN-CampusConnect/student','/UN-CampusConnect/tutor', '/UN-CampusConnect/bienestarpublications/create']
+  matcher: ['/UN-CampusConnect/student']
 };
 
 export default Middleware;

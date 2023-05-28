@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import Button from 'react-bootstrap/Button';
-import ModalBootDelete from 'app/components/calls/ModalBootDelete'
+import ModalBootDelete from 'app/components/calls/modalBootDelete'
 import ModalBootViewParticipants from 'app/components/calls/modalBootViewParticipants'
 import ModalBootCreate from 'app/components/calls/modalBootCreate'
 import ModalBootEdit from 'app/components/calls/modalBootEdit'
