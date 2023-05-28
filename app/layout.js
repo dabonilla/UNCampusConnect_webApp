@@ -2,7 +2,6 @@ import './globals.css'
 import Head from "next/head";
 import 'bootstrap/dist/css/bootstrap.css'
 import { Inter } from 'next/font/google'
-import { Navigation } from './components/Navigation';
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {

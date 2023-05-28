@@ -1,12 +1,13 @@
-'use client'
+
+import Modal from 'react-bootstrap/Modal';
 import { useForm } from "react-hook-form";
-import React from 'react';
 import axios from "axios";
-import { useState } from 'react';
 
 const endpoint = `http://${process.env.API_GATEWAY_URL}:${process.env.API_GATEWAY_PORT}/graphql`
-export default function FormCreateCall( {hideModalCreate, reloadPage}) {
-  const [errorForm, setErrorForm] = useState('');
+export default function ModalBootCreate({show, reloadPage,setShow }) {
+  const handleClose = () => {
+    setShow(false)
+  };
   const { register, formState: { errors }, handleSubmit } = useForm();
   const onSubmit = data => {
     const queryCreate = `
@@ -39,19 +40,20 @@ export default function FormCreateCall( {hideModalCreate, reloadPage}) {
                                     })
       }
       createCall()
-      
-    hideModalCreate('formCreate')
+    handleClose()
   };
   return (
-    <div className="modal fade" id='formCreate' tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div className="modal-dialog">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h1 className="modal-title fs-5" id="exampleModalLabel">Crear convocatoria</h1>
-            <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div className="modal-body">
-            <form onSubmit={handleSubmit(onSubmit)}>
+    <Modal
+      show={show}
+      onHide={handleClose}
+      backdrop="static"
+      keyboard={false}
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>Lista de participantes.</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+      <form onSubmit={handleSubmit(onSubmit)}>
               <div className="mb-3">
                 <label htmlFor="groupName" className="form-label">Nombre de grupo</label>
                 <input
@@ -106,13 +108,12 @@ export default function FormCreateCall( {hideModalCreate, reloadPage}) {
                 {errors.schedule?.type === 'required' && <p className="text-danger" role="alert">El horario es obligatorio</p>}
 
               </div>
-              <button style={{backgroundColor: "#61735A", color: 'white'}} type="button" className="btn  m-6" data-bs-dismiss="modal">Cancelar</button>
+              <button style={{backgroundColor: "#61735A", color: 'white'}} type="button" className="btn  m-6"onClick={handleClose}>Cancelar</button>
               <button style={{backgroundColor: "#21413a", color: 'white'}} type="submit" className="btn " >Aceptar</button>
-            </form>
-          </div>
+      </form>
 
-        </div>
-      </div>
-    </div>
+      </Modal.Body>
+    </Modal>
+
   )
 }
