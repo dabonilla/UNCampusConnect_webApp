@@ -1,0 +1,16 @@
+.padre {
+    height: 70vh;
+}
+
+.titulo h1{
+    font-weight: bold;
+    font-size:60px;
+}
+
+.titulo span {
+    color: #21413a;
+}
+
+.titulointro {
+    margin-top: 40px ;
+}
