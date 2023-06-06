@@ -18,8 +18,8 @@ const nextConfig = {
     ];
   },
   env: {
-    API_GATEWAY_URL: '127.0.0.1',
-    API_GATEWAY_PORT: '5000',
+    API_GATEWAY_URL: '34.68.82.211',
+    API_GATEWAY_PORT: '5200',
   },
 }
 
