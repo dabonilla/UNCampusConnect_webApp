@@ -12,7 +12,7 @@ const nextConfig = {
     return [
       {
         source: '/',
-        destination: '/UN-CampusConnect/signin',
+        destination: '/UN-CampusConnect/homepage',
         permanent: true,
       },
     ];
