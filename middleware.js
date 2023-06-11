@@ -18,6 +18,7 @@ export async function Middleware(request) {
     return NextResponse.redirect(new URL('/UN-CampusConnect/signin', request.url))
   }
   else{
+    /*
     let role = ''
       await fetch(endpoint, {
                   method: "POST",
@@ -47,11 +48,12 @@ export async function Middleware(request) {
       return NextResponse.next();
     }
   }
+*/
 }
 }
 // See "Matching Paths" below to learn more
 export const config = {
-  matcher: ['/UN-CampusConnect/student']
+  matcher: ['/UN-CampusConnect/student','/UN-CampusConnect/admin/calls','/UN-CampusConnect/student/calls']
 };
 
 export default Middleware;

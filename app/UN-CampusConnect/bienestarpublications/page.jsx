@@ -58,7 +58,7 @@ export default function PublicacionesBienestar() {
               <h3>Crea una nueva publicación aquí:</h3>
             </div>
             <div className='col-3 d-flex justify-content-end'>
-              <Link class="nav-link" href='/UN-CampusConnect/bienestarpublications/create'as={`/UN-CampusConnect/bienestarpublications/create`}>
+              <Link className="nav-link" href='/UN-CampusConnect/bienestarpublications/create'as={`/UN-CampusConnect/bienestarpublications/create`}>
                 <button type="button" className={`btn  ${styles.btncustom}`}>
                   Crear Publicación
                 </button>
@@ -70,7 +70,7 @@ export default function PublicacionesBienestar() {
             <div>
               {publicaciones.map(publicacion => (
                 <article key={publicacion.publication_id} className={` ${styles.publicacion} rounded mt-2`}>
-                  <Link class="nav-link" href='/UN-CampusConnect/bienestarpublications/[id]'as={`/UN-CampusConnect/bienestarpublications/${publicacion.publication_id}`}>
+                  <Link className="nav-link" href='/UN-CampusConnect/bienestarpublications/[id]'as={`/UN-CampusConnect/bienestarpublications/${publicacion.publication_id}`}>
                     <h3 className={styles.title}>{publicacion.title}</h3>
                     <p className={styles.date}>{formatDate(publicacion.publication_date)}</p>
                   </Link>

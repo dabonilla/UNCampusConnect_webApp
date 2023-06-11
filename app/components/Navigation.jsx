@@ -4,6 +4,7 @@ import styles from './Navigation.module.css';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation'
+import axios from "axios";
 const endpoint = `http://${process.env.API_GATEWAY_URL}:${process.env.API_GATEWAY_PORT}/graphql`;
 
 // Nuevo componente para realizar la consulta y obtener el rol
@@ -18,6 +19,18 @@ function RoleComponent({ token, onRoleFetched }) {
 
   useEffect(() => {
     if (token) {
+      const config ={
+        headers: { Authorization: `Bearer ${token}` }
+      }
+      axios.post(endpoint,{query: queryRole},config)
+        .then(response => {
+          const role = response.data.data.getMyInfo.role;
+          onRoleFetched(role);
+        })
+        .catch(error => {
+          console.error(error);
+        });
+      /*
       fetch(endpoint, {
         method: 'POST',
         headers: {
@@ -40,6 +53,7 @@ function RoleComponent({ token, onRoleFetched }) {
         .catch((error) => {
           console.error(error);
         });
+*/
     } else {
       const role = 'no hay';
       onRoleFetched(role);
